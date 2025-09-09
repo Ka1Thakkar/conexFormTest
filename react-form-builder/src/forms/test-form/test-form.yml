@@ -1,0 +1,174 @@
+# Test Form YAML for FormBuilder - covers all supported field types
+
+conexResourceId: "testForm001"
+formName: "testForm"
+formTitle: "FormBuilder Demo - All Elements"
+formDescription: "A test form to demonstrate all supported field types and validation."
+
+formGroup:
+  - formGroupName: "testFormGroup"
+    formControls:
+      - name: "fullName"
+        label: "Full Name"
+        htmlControl: "input"
+        inputType: "text"
+        required: true
+        placeholder: "Enter your full name"
+        initialValue: ""
+        validations:
+          required: true
+          minLength: 2
+          maxLength: 64
+          errorMessages:
+            required: "Full name is required"
+            minLength: "Full name must be at least 2 characters"
+            maxLength: "Full name must be at most 64 characters"
+
+      - name: "email"
+        label: "Email Address"
+        htmlControl: "input"
+        inputType: "email"
+        required: true
+        placeholder: "Enter your email address"
+        initialValue: ""
+        validations:
+          required: true
+          email: true
+          minLength: 5
+          maxLength: 64
+          errorMessages:
+            required: "Email address is required"
+            email: "Email address is not valid"
+            minLength: "Email must be at least 5 characters"
+            maxLength: "Email must be at most 64 characters"
+
+      - name: "password"
+        label: "Password"
+        htmlControl: "input"
+        inputType: "password"
+        required: true
+        placeholder: "Enter your password"
+        initialValue: ""
+        validations:
+          required: true
+          minLength: 8
+          maxLength: 32
+          errorMessages:
+            required: "Password is required"
+            minLength: "Password must be at least 8 characters"
+            maxLength: "Password must be at most 32 characters"
+
+      - name: "bio"
+        label: "Bio"
+        htmlControl: "textarea"
+        required: false
+        placeholder: "Tell us about yourself"
+        initialValue: ""
+        validations:
+          maxLength: 256
+          errorMessages:
+            maxLength: "Bio must be at most 256 characters"
+
+      - name: "gender"
+        label: "Gender"
+        htmlControl: "radio"
+        selectOptions:
+          male: "Male"
+          female: "Female"
+          other: "Other"
+        required: true
+        initialValue: ""
+        validations:
+          required: true
+          errorMessages:
+            required: "Gender is required"
+
+      - name: "interests"
+        label: "Interests"
+        htmlControl: "checkbox"
+        selectOptions:
+          sports: "Sports"
+          music: "Music"
+          travel: "Travel"
+          reading: "Reading"
+        required: false
+        initialValue: []
+        validations: {}
+
+      - name: "country"
+        label: "Country"
+        htmlControl: "select"
+        selectOptions:
+          us: "United States"
+          ca: "Canada"
+          uk: "United Kingdom"
+          au: "Australia"
+        required: true
+        initialValue: ""
+        validations:
+          required: true
+          errorMessages:
+            required: "Country is required"
+
+      - name: "dob"
+        label: "Date of Birth"
+        htmlControl: "input"
+        inputType: "date"
+        required: true
+        placeholder: ""
+        initialValue: ""
+        validations:
+          required: true
+          minDate: "1900-01-01"
+          maxDate: "2020-12-31"
+          errorMessages:
+            required: "Date of birth is required"
+            minDate: "Date is too early"
+            maxDate: "Date is too late"
+
+      - name: "vacation"
+        label: "Vacation Dates"
+        htmlControl: "dateRange"
+        required: true
+        initialValue:
+          from: ""
+          to: ""
+        validations:
+          required: true
+          errorMessages:
+            required: "Vacation dates are required"
+            range: "End date must be after start date"
+
+      - name: "profilePic"
+        label: "Profile Picture"
+        htmlControl: "file"
+        required: true
+        initialValue: ""
+        validations:
+          required: true
+          allowedFormats:
+            - "image/png"
+            - "image/jpeg"
+          errorMessages:
+            required: "Profile picture is required"
+            allowedFormats: "Only PNG and JPEG images are allowed"
+
+      - name: "documents"
+        label: "Documents (PDFs)"
+        htmlControl: "file"
+        required: true
+        multiple: true
+        initialValue: []
+        validations:
+          required: true
+          allowedFormats:
+            - "application/pdf"
+          errorMessages:
+            required: "At least one PDF is required"
+            allowedFormats: "Only PDF files are allowed"
+
+      - name: "submit"
+        label: "Submit"
+        htmlControl: "button"
+        buttonClickAction: "complete"
+        validations: {}

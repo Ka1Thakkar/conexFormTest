@@ -1,0 +1,44 @@
+# Template for ConEx form configuration
+conexResourceId: "" # unique resource id in ConEx
+formName: "" # name of the form for use in code
+formTitle: "Login" # title for display to user
+formDescription: "Form for user login" # description for user and developer
+
+formGroup:
+  - formGroupName: "loginFormGroup" # name of the form group
+
+    formGroupValidators:
+      - name: "uniqueValidatorName" # name of the validator should be unique for the form group. should match the error name raised by the function
+        validationFn: "loginFormGroup_customValidator" # name of the custom validator function. format  - formGroupName_functionName  should be unique for the entire app
+        controls:
+          - name: "email"
+            displayMessage: true
+
+    formControls:
+      - name: "email" # name used as key in formGroup
+        label: "Email Address" # user friendly label
+        htmlControl: "input" # htmlcontrol - 'input', 'textarea','select','radio','checkbox','button'
+        inputType: "email" # 'text','number', 'email' applicable only for controls of type input
+        required: true # true or false
+        placeholder: "Enter your email address" # User friendly message applicable only for controls of type input
+        valueType: "string" # 'integer','number','string','date','boolean'
+        selectOptions: {} # key pairs of value and label for select, radio, checkbox
+        selectMultiple: false # true or false for selecting multiple options
+        initialValue: "" # initial value of the control
+        disabled: false # true or false for disabling the control
+        buttonClickAction: "" # Required if htmlControl is button. 'complete' means, the user input is complete and form data can be validated and returned to parent
+
+        validations:
+          required: true # true or false
+          email: true # if value is an email address. true or false
+          maxLength: 64 # should be integer. maximum length allowed applicable for input control
+          minLength: 5 # should be integer. minimum lentgh allowed , applicable for input control
+          pattern: null # regxp pattern - default is null
+          numericality:
+            onlyInteger: false # true or false
+            greaterThanOrEqualTo: 0 # value to be compared to be greater than or equal
+            lessThanOrEqualTo: 0 # value to be compared to be less or equal
+          errorMessages:
+            required: "Email address is required"
+            email: "Email address is not valid"
+            # <name of the custom validations>: "Error message"

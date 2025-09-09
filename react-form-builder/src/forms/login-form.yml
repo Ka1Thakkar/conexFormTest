@@ -1,0 +1,77 @@
+# Demo Login Form YAML using ConEx template structure
+
+conexResourceId: "loginForm001" # unique resource id in ConEx
+formName: "loginForm" # name of the form for use in code
+formTitle: "Login" # title for display to user
+formDescription: "Form for user login" # description for user and developer
+
+formGroup:
+  - formGroupName: "loginFormGroup" # name of the form group
+    formGroupValidators:
+      - name: "emailRequiredValidator"
+        validationFn: "loginFormGroup_emailRequiredValidator"
+        controls:
+          - name: "email"
+            displayMessage: true
+    formControls:
+      - name: "email"
+        label: "Email Address"
+        htmlControl: "input"
+        inputType: "email"
+        required: true
+        placeholder: "Enter your email address"
+        valueType: "string"
+        selectOptions: {}
+        selectMultiple: false
+        initialValue: ""
+        disabled: false
+        buttonClickAction: ""
+        validations:
+          required: true
+          email: true
+          maxLength: 64
+          minLength: 5
+          pattern: null
+          numericality:
+            onlyInteger: false
+            greaterThanOrEqualTo: 0
+            lessThanOrEqualTo: 0
+          errorMessages:
+            required: "Email address is required"
+            email: "Email address is not valid"
+
+      - name: "password"
+        label: "Password"
+        htmlControl: "input"
+        inputType: "password"
+        required: true
+        placeholder: "Enter your password"
+        valueType: "string"
+        selectOptions: {}
+        selectMultiple: false
+        initialValue: ""
+        disabled: false
+        buttonClickAction: ""
+        validations:
+          required: true
+          minLength: 8
+          maxLength: 32
+          pattern: null
+          errorMessages:
+            required: "Password is required"
+            minLength: "Password must be at least 8 characters"
+            maxLength: "Password must be at most 32 characters"
+
+      - name: "login"
+        label: "Login"
+        htmlControl: "button"
+        inputType: ""
+        required: false
+        placeholder: ""
+        valueType: ""
+        selectOptions: {}
+        selectMultiple: false
+        initialValue: ""
+        disabled: false
+        buttonClickAction: "complete"
+        validations: {}
