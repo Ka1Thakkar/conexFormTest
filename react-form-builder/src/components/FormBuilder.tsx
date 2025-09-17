@@ -6,6 +6,22 @@ import yaml from "js-yaml";
 
 type SelectOptions = Record<string, string>;
 
+/**
+ * Represents a single form control (field or button) in the form.
+ * @property {string} name - Unique name/key for the control.
+ * @property {string} label - User-friendly label for the control.
+ * @property {string} htmlControl - Type of HTML control ('input', 'textarea', 'select', etc.).
+ * @property {string} [inputType] - Input type for 'input' controls (e.g., 'text', 'email', 'password').
+ * @property {boolean} [disabled] - Whether the control is disabled.
+ * @property {boolean} [required] - Whether the control is required.
+ * @property {string} [placeholder] - Placeholder text for the control.
+ * @property {SelectOptions} [selectOptions] - Options for select, radio, or checkbox controls.
+ * @property {boolean} [selectMultiple] - Whether multiple options can be selected.
+ * @property {string} [buttonClickAction] - Action for button controls ('complete' to submit).
+ * @property {any} [initialValue] - Initial value for the control.
+ * @property {any} [validations] - Validation rules for the control.
+ * @property {boolean} [multiple] - For file controls, whether multiple files can be uploaded.
+ */
 type Control = {
   name: string;
   label: string;
@@ -22,17 +38,36 @@ type Control = {
   multiple?: boolean;
 };
 
+/**
+ * Represents a group of form controls and optional group-level validators.
+ * @property {Control[]} formControls - Array of controls in the group.
+ * @property {any[]} [formGroupValidators] - Optional array of group-level validators.
+ */
 type FormGroup = {
   formControls: Control[];
   formGroupValidators?: any[];
 };
 
+/**
+ * Represents the overall form configuration loaded from YAML.
+ * @property {string} [formTitle] - Title of the form.
+ * @property {string} [formDescription] - Description of the form.
+ * @property {FormGroup|FormGroup[]} formGroup - Form group(s) containing controls.
+ */
 type FormConfig = {
   formTitle?: string;
   formDescription?: string;
   formGroup: FormGroup | FormGroup[];
 };
 
+/**
+ * Props for the FormBuilder component.
+ * @property {string} yamlConfig - Raw YAML string for form configuration.
+ * @property {string} [htmlSnippet] - Optional HTML snippet to display above the form.
+ * @property {(data: Record<string, any>) => void} [onFormComplete] - Callback when form is successfully submitted.
+ * @property {number|string} [formMaxWidth] - Max width of the form.
+ * @property {string} [formMargin] - Margin for the form container.
+ */
 type FormBuilderProps = {
   yamlConfig: string;
   htmlSnippet?: string;
@@ -41,6 +76,13 @@ type FormBuilderProps = {
   formMargin?: string;
 };
 
+/**
+ * Represents a preview of an uploaded file.
+ * @property {string} url - Preview URL (for images).
+ * @property {string} name - File name.
+ * @property {string} type - MIME type of the file.
+ * @property {number} size - File size in bytes.
+ */
 type FilePreview = {
   url: string;
   name: string;
@@ -48,6 +90,11 @@ type FilePreview = {
   size: number;
 };
 
+/**
+ * Main React component for rendering a dynamic form based on YAML configuration.
+ * @param {FormBuilderProps} props - Props for the FormBuilder component.
+ * @returns {JSX.Element} The rendered form.
+ */
 export default function FormBuilder({
   yamlConfig,
   htmlSnippet,
@@ -82,6 +129,11 @@ export default function FormBuilder({
   });
 
   // Build validation rules for react-hook-form
+  /**
+   * Generates validation rules for react-hook-form based on control configuration.
+   * @param {Control} control - The form control configuration object.
+   * @returns {Record<string, any>} Validation rules for the control.
+   */
   function getValidationRules(control: Control) {
     const rules: Record<string, any> = {};
     const v = control.validations || {};
@@ -155,6 +207,11 @@ export default function FormBuilder({
   }
 
   // Dynamically build Zod schema from YAML config
+  /**
+   * Dynamically builds a Zod schema for the form based on the controls array.
+   * @param {Control[]} controls - Array of form control configurations.
+   * @returns {z.ZodObject<any>} Zod schema object for form validation.
+   */
   function buildZodSchema(controls: Control[]) {
     const shape: Record<string, any> = {};
 

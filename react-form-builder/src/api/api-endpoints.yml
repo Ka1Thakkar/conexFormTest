@@ -1,0 +1,76 @@
+# Template for ConEx API endpoint configuration
+
+conexResourceId: "" # unique resource id in ConEx
+serviceName: "" # name of the API service for use in code
+serviceTitle: "" # title for display to user
+serviceDescription: "" # description for user and developer
+
+endpoints:
+  - endpointName: "getUser"
+    url: "/api/user"
+    method: "GET"
+    requiresAuth: true
+    retry: 3
+    mock: false
+    cache: true
+    requestSchema:
+      id:
+        required: true
+        valueType: "integer"
+        validations:
+          minValue: 1
+          errorMessages:
+            required: "User ID is required"
+            minValue: "User ID must be at least 1"
+    responseSchema:
+      id:
+        valueType: "integer"
+      name:
+        valueType: "string"
+      email:
+        valueType: "string"
+      errorMessages:
+        notFound: "User not found"
+        unauthorized: "Unauthorized access"
+
+  - endpointName: "updateUser"
+    url: "/api/user"
+    method: "PUT"
+    requiresAuth: true
+    retry: 2
+    mock: false
+    cache: false
+    requestSchema:
+      id:
+        required: true
+        valueType: "integer"
+        validations:
+          minValue: 1
+          errorMessages:
+            required: "User ID is required"
+            minValue: "User ID must be at least 1"
+      name:
+        required: true
+        valueType: "string"
+        validations:
+          minLength: 2
+          maxLength: 64
+          errorMessages:
+            required: "Name is required"
+            minLength: "Name must be at least 2 characters"
+            maxLength: "Name must be at most 64 characters"
+      email:
+        required: true
+        valueType: "string"
+        validations:
+          email: true
+          errorMessages:
+            required: "Email is required"
+            email: "Email address is not valid"
+    responseSchema:
+      success:
+        valueType: "boolean"
+      errorMessages:
+        notFound: "User not found"
+        unauthorized: "Unauthorized access"
+        validation: "Validation failed"

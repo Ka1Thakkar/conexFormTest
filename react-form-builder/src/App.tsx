@@ -15,6 +15,11 @@ const htmlSnippet: string = `
   <p>Please fill out the form below:</p>
 `;
 
+/**
+ * Callback for when the form is completed and submitted.
+ * @param {Record<string, any>} data - The validated form data.
+ * @returns {void}
+ */
 function handleFormComplete(data: Record<string, any>) {
   alert("Form submitted! Data: " + JSON.stringify(data, null, 2));
 }
